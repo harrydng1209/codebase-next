@@ -1,0 +1,9 @@
+.git
+.husky
+
+dist
+.next
+node_modules
+pnpm-lock.yaml
+
+src/@types

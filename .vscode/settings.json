@@ -1,0 +1,13 @@
+{
+  "cSpell.enabled": false,
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.inlayHints.enabled": "off",
+  "scss.lint.unknownAtRules": "ignore",
+  "eslint.useFlatConfig": true,
+
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  }
+}
