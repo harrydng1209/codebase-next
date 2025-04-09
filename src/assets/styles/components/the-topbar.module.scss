@@ -1,0 +1,9 @@
+.container {
+  height: var(--ant-header-height);
+  background-color: var(--r-background-content-color);
+  @include flexbox-style(0, space-between, center);
+
+  &__menu {
+    @include flexbox-style(30px, space-between, center);
+  }
+}

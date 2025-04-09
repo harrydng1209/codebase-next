@@ -1,0 +1,36 @@
+.container {
+  height: 100vh;
+  @include flexbox-style;
+
+  > section {
+    height: 370px;
+    width: 420px;
+    border: 1px solid var(--r-background-content-color);
+    box-shadow:
+      0px 0px 6px rgba(0, 0, 0, 0.12),
+      0px 4px 4px rgba(0, 0, 0, 0.04);
+    border-radius: 20px;
+    padding: 52px;
+    background-color: var(--r-background-content-color);
+
+    > h4 {
+      text-align: center;
+      margin-bottom: 8px;
+      @include text-style(20px, 700, 30px);
+    }
+  }
+
+  &__register-now {
+    margin-top: 12px;
+    @include flexbox-style(4px);
+    @include text-style(12px);
+
+    > p {
+      @include text-style(12px);
+    }
+
+    > a {
+      color: $color-primary;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+// tailwindcss
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// ant-design
+@import '../custom/ant-shared.scss';
+
+// main
+@import './fonts';
+@import './themes';
+@import './shared.scss';

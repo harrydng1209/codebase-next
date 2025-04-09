@@ -1,0 +1,11 @@
+.container {
+  height: calc(100% - 24px);
+
+  &__logo {
+    width: 24px;
+    height: 24px;
+    margin: 20px auto;
+    cursor: pointer;
+    @include flexbox-style;
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "shared": {
+    "hello": "こんにちは",
+    "dashboard": "ダッシュボード",
+    "settings": "設定",
+    "search": "検索",
+
+    "navigator": {
+      "home": "ホーム",
+      "login": "ログイン",
+      "register": "登録する",
+      "base-components": "ベースコンポーネント"
+    },
+
+    "button": {
+      "ok": "はい",
+      "cancel": "キャンセル"
+    }
+  }
+}

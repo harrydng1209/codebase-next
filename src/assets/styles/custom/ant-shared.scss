@@ -1,0 +1,44 @@
+:root {
+  --ant-header-height: 75px;
+  --ant-header-padding: 0 20px;
+  --ant-aside-width: 270px;
+  --ant-main-padding: 20px;
+}
+
+.ant-layout {
+  background: unset;
+
+  &-header {
+    padding: var(--ant-header-padding);
+    height: var(--ant-header-height);
+  }
+
+  &-content {
+    color: unset;
+  }
+}
+
+.ant-table-wrapper .ant-table {
+  scrollbar-color: unset;
+}
+
+.ant-table-wrapper
+  .ant-table-ping-left:not(.ant-table-has-fix-left)
+  .ant-table-container::before {
+  box-shadow: inset 10px 0 8px -8px var(--r-box-shadow-color) !important;
+}
+
+.ant-table-wrapper
+  .ant-table-ping-right:not(.ant-table-has-fix-right)
+  .ant-table-container::after {
+  box-shadow: inset -10px 0 8px -8px var(--r-box-shadow-color) !important;
+}
+
+.ant-table-body::-webkit-scrollbar {
+  width: $scrollbar-width;
+}
+
+.ant-table-body::-webkit-scrollbar-thumb {
+  border-radius: 50px;
+  background-color: var(--r-scrollbar-color);
+}
