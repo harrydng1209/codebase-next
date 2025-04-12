@@ -33,11 +33,10 @@ yarn-error.log*
 # vercel
 .vercel
 
-# typescript
+# Other files
 *.tsbuildinfo
 next-env.d.ts
 
-# Other files
 .env
 .env.*
 !.env.sample
@@ -45,3 +44,5 @@ next-env.d.ts
 bun.lockb
 yarn.lock
 package-lock.json
+
+src/@types/auto-imports.d.ts

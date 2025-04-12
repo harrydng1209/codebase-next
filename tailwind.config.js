@@ -1,11 +1,8 @@
 import plugin from 'tailwindcss/plugin';
 
 export default {
-  content: [
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+  content: ['src/**/*.{js,jsx,ts,tsx}'],
+
   plugins: [
     plugin(function ({ addUtilities }) {
       const newUtilities = {
@@ -23,7 +20,9 @@ export default {
       addUtilities(newUtilities);
     }),
   ],
+
   prefix: 'tw-',
+
   theme: {
     extend: {},
   },

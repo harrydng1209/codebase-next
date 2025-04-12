@@ -1,5 +1,6 @@
 import { Input, InputProps, InputRef } from 'antd';
 import { TextAreaProps } from 'antd/es/input';
+import { forwardRef } from 'react';
 
 interface IInputProps extends InputProps {}
 interface ITextAreaProps extends TextAreaProps {}
@@ -20,3 +21,6 @@ export const BaseInputArea = forwardRef<InputRef, ITextAreaProps>(
     return <Input.TextArea ref={ref} {...otherProps} />;
   },
 );
+
+BaseInput.displayName = 'BaseInput';
+BaseInputArea.displayName = 'BaseInputArea';

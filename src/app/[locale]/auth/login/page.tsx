@@ -1,22 +1,27 @@
+'use client';
 import { login } from '@/apis/auth.api';
-import IconEye from '@/assets/icons/modules/auth/IconEye.svg?react';
-import IconEyeClosed from '@/assets/icons/modules/auth/IconEyeClosed.svg?react';
-import IconRequired from '@/assets/icons/shared/IconRequired.svg?react';
+import IconEye from '@/assets/icons/modules/auth/IconEye.svg';
+import IconEyeClosed from '@/assets/icons/modules/auth/IconEyeClosed.svg';
+import IconRequired from '@/assets/icons/shared/IconRequired.svg';
 import styles from '@/assets/styles/components/auth/login.module.scss';
 import { BaseButton } from '@/components/shared/BaseButton';
 import { BaseFormItem } from '@/components/shared/BaseFormItem';
 import { BaseInput } from '@/components/shared/BaseInput';
 import { AUTH_PAGES, HOME } from '@/constants/route-pages.const';
 import { REGEXES, SELECTORS } from '@/constants/shared.const';
+import { useHandleCatchError } from '@/hooks/shared/use-handle-catch-error';
 import { ILoginRequest } from '@/models/interfaces/auth.interface';
 import { useAuthStore } from '@/stores/auth.store';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'antd';
+import { useTranslations } from 'next-intl';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { Link } from 'react-router';
 import { object as yupObject, string as yupString } from 'yup';
 
-export const Login: React.FC = () => {
+const Login: React.FC = () => {
   const schema = yupObject({
     email: yupString()
       .required('Email is required')
@@ -33,9 +38,9 @@ export const Login: React.FC = () => {
     mode: 'onChange',
     resolver: yupResolver(schema),
   });
-  const { t } = useTranslation();
+  const t = useTranslations();
   const authStore = useAuthStore();
-  const navigate = useNavigate();
+  const router = useRouter();
   const { handleCatchError } = useHandleCatchError();
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -48,7 +53,7 @@ export const Login: React.FC = () => {
     try {
       const response = await login(values);
       authStore.setToken(response.data.accessToken);
-      await navigate(HOME);
+      await router.push(HOME);
     } catch (error) {
       handleCatchError(error);
     }
@@ -102,9 +107,11 @@ export const Login: React.FC = () => {
 
         <div className={styles['container__register-now']}>
           <p>{t('auth.noAccount')}</p>
-          <Link to={AUTH_PAGES.REGISTER}>{t('auth.registerNow')}</Link>
+          <Link href={AUTH_PAGES.REGISTER}>{t('auth.registerNow')}</Link>
         </div>
       </section>
     </div>
   );
 };
+
+export default Login;

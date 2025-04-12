@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 export const useWindowScroll = () => {
   const { addEventListener, removeEventListener, scrollX, scrollY } = window;
 

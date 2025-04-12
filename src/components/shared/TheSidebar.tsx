@@ -1,20 +1,22 @@
-import IconDashboard from '@/assets/icons/shared/IconDashboard.svg?react';
-import IconFolderShared from '@/assets/icons/shared/IconFolderShared.svg?react';
-import IconLogo from '@/assets/icons/shared/IconLogo.svg?react';
-import IconSettings from '@/assets/icons/shared/IconSettings.svg?react';
+import IconDashboard from '@/assets/icons/shared/IconDashboard.svg';
+import IconFolderShared from '@/assets/icons/shared/IconFolderShared.svg';
+import IconLogo from '@/assets/icons/shared/IconLogo.svg';
+import IconSettings from '@/assets/icons/shared/IconSettings.svg';
 import styles from '@/assets/styles/components/the-sidebar.module.scss';
-import { BASE_COMPONENTS, HOME } from '@/constants/route-pages.const';
+import { CODEBASE, HOME } from '@/constants/route-pages.const';
 import { AUTH_PAGES } from '@/constants/route-pages.const';
 import { useTheme } from '@/hooks/shared/use-theme';
 import { useThemeColor } from '@/hooks/shared/use-theme-color';
 import { Menu } from 'antd';
-import { Link } from 'react-router';
+import { useTranslations } from 'next-intl';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 
 export const TheSidebar: React.FC = () => {
-  const { t } = useTranslation();
+  const t = useTranslations();
   const { isDark } = useTheme();
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const pathname = usePathname();
   const { getThemeColor } = useThemeColor();
 
   const menuItems = [
@@ -30,17 +32,17 @@ export const TheSidebar: React.FC = () => {
     },
     {
       icon: <IconFolderShared fill={getThemeColor('ICON_SVG')} />,
-      key: BASE_COMPONENTS,
-      label: t('shared.navigator.base-components'),
+      key: CODEBASE,
+      label: t('shared.navigator.codebase'),
     },
   ];
   const selectedKey =
-    menuItems.find((item) => item.key === location.pathname)?.key || '';
+    menuItems.find((item) => item.key === pathname)?.key || '';
 
   return (
     <div className={styles['container']}>
       <div className={styles['container__logo']}>
-        <Link to={HOME}>
+        <Link href={HOME}>
           <IconLogo />
         </Link>
       </div>
@@ -52,7 +54,7 @@ export const TheSidebar: React.FC = () => {
           label: item.label,
         }))}
         mode="inline"
-        onClick={({ key }) => navigate(key)}
+        onClick={({ key }) => router.push(key)}
         selectedKeys={[selectedKey]}
         theme={isDark ? 'dark' : 'light'}
       />

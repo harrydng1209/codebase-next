@@ -1,9 +1,10 @@
 import { EToast } from '@/models/enums/shared.enum';
 import { TFailureResponse } from '@/models/types/auth.type';
 import { isFailureResponse, showToast } from '@/utils/shared.util';
+import { useTranslations } from 'next-intl';
 
 export const useHandleCatchError = () => {
-  const { t } = useTranslation();
+  const t = useTranslations();
 
   const handleCatchError = <D>(props: unknown) => {
     switch (true) {

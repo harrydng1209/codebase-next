@@ -1,11 +1,11 @@
 import { healthCheck } from '@/apis/shared.api';
-import IconDashboard from '@/assets/icons/shared/IconDashboard.svg?react';
-import IconDelete from '@/assets/icons/shared/IconDelete.svg?react';
-import IconFolderShared from '@/assets/icons/shared/IconFolderShared.svg?react';
-import IconNotification from '@/assets/icons/shared/IconNotification.svg?react';
-import IconSearch from '@/assets/icons/shared/IconSearch.svg?react';
-import IconSettings from '@/assets/icons/shared/IconSettings.svg?react';
-import styles from '@/assets/styles/components/base-components.module.scss';
+import IconDashboard from '@/assets/icons/shared/IconDashboard.svg';
+import IconDelete from '@/assets/icons/shared/IconDelete.svg';
+import IconFolderShared from '@/assets/icons/shared/IconFolderShared.svg';
+import IconNotification from '@/assets/icons/shared/IconNotification.svg';
+import IconSearch from '@/assets/icons/shared/IconSearch.svg';
+import IconSettings from '@/assets/icons/shared/IconSettings.svg';
+import styles from '@/assets/styles/components/codebase.module.scss';
 import { BaseAutocomplete } from '@/components/shared/BaseAutocomplete';
 import { BaseButton } from '@/components/shared/BaseButton';
 import { BaseCheckbox } from '@/components/shared/BaseCheckbox';
@@ -29,7 +29,7 @@ import {
   suggestions,
   tableColumns,
   tableData,
-} from '@/mocks/base-components.mock';
+} from '@/mocks/codebase.mock';
 import { EToast } from '@/models/enums/shared.enum';
 import { useLoadingStore } from '@/stores/loading.store';
 import { showToast, sleep } from '@/utils/shared.util';
@@ -44,6 +44,8 @@ import {
 } from 'antd';
 import { DefaultOptionType } from 'antd/es/select';
 import { Dayjs } from 'dayjs';
+import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useDebounceCallback } from 'usehooks-ts';
 import {
@@ -52,6 +54,11 @@ import {
   ref as yupRef,
   string as yupString,
 } from 'yup';
+
+type _TIcons = Record<
+  string,
+  { default: React.FC<React.SVGProps<SVGSVGElement>> }
+>;
 
 interface IForm {
   email: string;
@@ -62,12 +69,7 @@ interface IForm {
   type: string;
 }
 
-type TIcons = Record<
-  string,
-  { default: React.FC<React.SVGProps<SVGSVGElement>> }
->;
-
-export const BaseComponents: React.FC = () => {
+const Codebase: React.FC = () => {
   const schema = yupObject({
     email: yupString()
       .required('Email is required')
@@ -101,7 +103,7 @@ export const BaseComponents: React.FC = () => {
     mode: 'onChange',
     resolver: yupResolver<IForm>(schema),
   });
-  const { t } = useTranslation();
+  const t = useTranslations();
   const loadingStore = useLoadingStore();
   const { getThemeColor } = useThemeColor();
 
@@ -123,7 +125,7 @@ export const BaseComponents: React.FC = () => {
     pageSize: 10,
     total: 1000,
   });
-  const [svgIcons, setSvgIcons] = useState<Record<string, React.FC>>({});
+  const [svgIcons, _setSvgIcons] = useState<Record<string, React.FC>>({});
 
   const handleGetHealthCheck = useDebounceCallback(async () => {
     await healthCheck();
@@ -222,17 +224,16 @@ export const BaseComponents: React.FC = () => {
   };
 
   const loadSvgIcons = async () => {
-    const icons: TIcons = import.meta.glob('@/assets/icons/**/*.svg', {
-      eager: true,
-      query: '?react',
-    });
-    const newIcons: Record<string, React.FC> = {};
-
-    Object.entries(icons).forEach(([path, module]) => {
-      const iconName = path.split('/').pop()?.replace('.svg', '');
-      if (iconName) newIcons[iconName] = module.default;
-    });
-    setSvgIcons(newIcons);
+    // const icons: TIcons = import.meta.glob('@/assets/icons/**/*.svg', {
+    //   eager: true,
+    //   query: '',
+    // });
+    // const newIcons: Record<string, React.FC> = {};
+    // Object.entries(icons).forEach(([path, module]) => {
+    //   const iconName = path.split('/').pop()?.replace('.svg', '');
+    //   if (iconName) newIcons[iconName] = module.default;
+    // });
+    // setSvgIcons(newIcons);
   };
 
   useEffect(() => {
@@ -606,3 +607,5 @@ export const BaseComponents: React.FC = () => {
     </div>
   );
 };
+
+export default Codebase;

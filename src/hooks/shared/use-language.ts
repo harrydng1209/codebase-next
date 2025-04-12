@@ -1,21 +1,26 @@
-import { STORAGE_KEYS } from '@/constants/shared.const';
+'use client';
+import { routing } from '@/i18n/routing';
 import { ELanguageCode } from '@/models/enums/shared.enum';
-import { useLocalStorage } from 'usehooks-ts';
+import { useLocale } from 'next-intl';
+import { usePathname, useRouter } from 'next/navigation';
 
 export const useLanguage = () => {
-  const { i18n } = useTranslation();
-  const [language, setLanguage] = useLocalStorage<ELanguageCode>(
-    STORAGE_KEYS.LANGUAGE,
-    ELanguageCode.English,
-  );
+  const router = useRouter();
+  const pathname = usePathname();
+  const locale = useLocale();
 
-  useEffect(() => {
-    if (language && Object.values(ELanguageCode).includes(language))
-      i18n.changeLanguage(language);
-  }, [language, i18n]);
+  const setLanguage = (newLang: ELanguageCode) => {
+    if (!routing.locales.includes(newLang)) return;
+
+    const segments = pathname.split('/');
+    segments[1] = newLang;
+    const newPath = segments.join('/');
+
+    router.push(newPath);
+  };
 
   return {
-    language,
+    language: locale as ELanguageCode,
     setLanguage,
   };
 };

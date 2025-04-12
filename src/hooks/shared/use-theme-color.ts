@@ -1,5 +1,7 @@
 import { DARK, LIGHT } from '@/constants/theme-colors.const';
 
+import { useTheme } from './use-theme';
+
 interface ICustomColors {
   DARK?: string;
   LIGHT?: string;

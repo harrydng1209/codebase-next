@@ -1,9 +1,9 @@
-import IconDarkMode from '@/assets/icons/shared/IconDarkMode.svg?react';
-import IconEnglish from '@/assets/icons/shared/IconEnglish.svg?react';
-import IconJapanese from '@/assets/icons/shared/IconJapanese.svg?react';
-import IconLightMode from '@/assets/icons/shared/IconLightMode.svg?react';
-import IconNotification from '@/assets/icons/shared/IconNotification.svg?react';
-import IconVietnamese from '@/assets/icons/shared/IconVietnamese.svg?react';
+import IconDarkMode from '@/assets/icons/shared/IconDarkMode.svg';
+import IconEnglish from '@/assets/icons/shared/IconEnglish.svg';
+import IconJapanese from '@/assets/icons/shared/IconJapanese.svg';
+import IconLightMode from '@/assets/icons/shared/IconLightMode.svg';
+import IconNotification from '@/assets/icons/shared/IconNotification.svg';
+import IconVietnamese from '@/assets/icons/shared/IconVietnamese.svg';
 import styles from '@/assets/styles/components/the-topbar.module.scss';
 import { BaseDropdown } from '@/components/shared/BaseDropdown';
 import { TheBreadcrumb } from '@/components/shared/TheBreadcrumb';
@@ -15,13 +15,13 @@ import { notifications } from '@/mocks/the-topbar.mock';
 import { ELanguageCode } from '@/models/enums/shared.enum';
 import { useAuthStore } from '@/stores/auth.store';
 import { Avatar, Badge, MenuProps } from 'antd';
-import { useNavigate } from 'react-router';
+import { useRouter } from 'next/navigation';
 
 export const TheTopbar: React.FC = () => {
   const { changeTheme, isDark } = useTheme();
   const { language, setLanguage } = useLanguage();
   const authStore = useAuthStore();
-  const navigate = useNavigate();
+  const router = useRouter();
   const { getThemeColor } = useThemeColor();
 
   const i18nOptions = Object.entries(ELanguageCode).map(([key, value]) => ({
@@ -71,7 +71,7 @@ export const TheTopbar: React.FC = () => {
 
   const handleLogout = async () => {
     authStore.logout();
-    await navigate(AUTH_PAGES.LOGIN);
+    await router.push(AUTH_PAGES.LOGIN);
   };
 
   const renderIcon = () => {

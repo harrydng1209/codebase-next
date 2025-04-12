@@ -1,7 +1,7 @@
 import { register } from '@/apis/auth.api';
-import IconEye from '@/assets/icons/modules/auth/IconEye.svg?react';
-import IconEyeClosed from '@/assets/icons/modules/auth/IconEyeClosed.svg?react';
-import IconRequired from '@/assets/icons/shared/IconRequired.svg?react';
+import IconEye from '@/assets/icons/modules/auth/IconEye.svg';
+import IconEyeClosed from '@/assets/icons/modules/auth/IconEyeClosed.svg';
+import IconRequired from '@/assets/icons/shared/IconRequired.svg';
 import styles from '@/assets/styles/components/auth/register.module.scss';
 import { BaseButton } from '@/components/shared/BaseButton';
 import { BaseFormItem } from '@/components/shared/BaseFormItem';
@@ -12,11 +12,14 @@ import { useHandleCatchError } from '@/hooks/shared/use-handle-catch-error';
 import { IRegister } from '@/models/interfaces/auth.interface';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'antd';
+import { useTranslations } from 'next-intl';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { Link } from 'react-router';
 import { object as yupObject, ref as yupRef, string as yupString } from 'yup';
 
-export const Register: React.FC = () => {
+const Register: React.FC = () => {
   const schema = yupObject({
     displayName: yupString()
       .required('Display name is required')
@@ -51,8 +54,8 @@ export const Register: React.FC = () => {
     mode: 'onChange',
     resolver: yupResolver(schema),
   });
-  const navigate = useNavigate();
-  const { t } = useTranslation();
+  const router = useRouter();
+  const t = useTranslations();
   const { handleCatchError } = useHandleCatchError();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -69,7 +72,7 @@ export const Register: React.FC = () => {
   const onSubmit: SubmitHandler<IRegister> = async (values) => {
     try {
       await register(values);
-      await navigate(AUTH_PAGES.LOGIN);
+      await router.push(AUTH_PAGES.LOGIN);
     } catch (error) {
       const errorData = handleCatchError<{ fields: (keyof IRegister)[] }>(
         error,
@@ -175,9 +178,11 @@ export const Register: React.FC = () => {
 
         <div className={styles['container__login-now']}>
           <p>{t('auth.hasAccount')}</p>
-          <Link to={AUTH_PAGES.LOGIN}>{t('auth.loginNow')}</Link>
+          <Link href={AUTH_PAGES.LOGIN}>{t('auth.loginNow')}</Link>
         </div>
       </section>
     </div>
   );
 };
+
+export default Register;

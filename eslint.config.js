@@ -10,6 +10,7 @@ export default [
     ignores: [
       '**/.git/',
       '**/.husky/',
+      '**/.next/',
       '**/dist/',
       '**/node_modules/',
       '**/pnpm-lock.yaml',
