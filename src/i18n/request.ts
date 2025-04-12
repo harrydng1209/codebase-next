@@ -1,4 +1,3 @@
-import { locales } from '@/locales';
 import { hasLocale } from 'next-intl';
 import { getRequestConfig } from 'next-intl/server';
 
@@ -9,9 +8,10 @@ export default getRequestConfig(async ({ requestLocale }) => {
   const locale = hasLocale(routing.locales, requested)
     ? requested
     : routing.defaultLocale;
+  const messages = (await import(`../../locales/${locale}.json`)).default;
 
   return {
     locale,
-    messages: locales[locale],
+    messages,
   };
 });
