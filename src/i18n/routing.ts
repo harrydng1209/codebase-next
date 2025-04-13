@@ -1,7 +1,14 @@
+import { COOKIE_KEYS } from '@/constants/shared.const';
+import { ELanguageCode } from '@/models/enums/shared.enum';
 import { defineRouting } from 'next-intl/routing';
 
 export const routing = defineRouting({
-  defaultLocale: 'en',
+  defaultLocale: ELanguageCode.English,
+  localeCookie: {
+    name: COOKIE_KEYS.LANGUAGE,
+    path: '/',
+    sameSite: 'lax',
+  },
   localeDetection: false,
-  locales: ['en', 'ja', 'vi'],
+  locales: Object.values(ELanguageCode),
 });

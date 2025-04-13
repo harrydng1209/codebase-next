@@ -31,7 +31,12 @@ export const SELECTORS = {
 } as const;
 
 export const STORAGE_KEYS = {
-  ACCESS_TOKEN: 'r-access-token',
-  LANGUAGE: 'r-language',
-  THEME: 'r-theme',
+  ACCESS_TOKEN: 'n_access_token',
+  LANGUAGE: 'n_language',
+  THEME: 'n_theme',
+} as const;
+
+export const COOKIE_KEYS = {
+  LANGUAGE: 'N_LANGUAGE',
+  REFRESH_TOKEN: 'REFRESH_TOKEN',
 } as const;

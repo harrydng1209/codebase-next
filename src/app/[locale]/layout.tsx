@@ -23,13 +23,14 @@ const plusJakartaSans = localFont({
       weight: '200 800',
     },
   ],
-  variable: '--r-plus-jakarta-sans',
+  variable: '--n-plus-jakarta-sans',
 });
 
 const RootLayout: React.FC<IProps> = async (props) => {
   const { children, params } = props;
 
   const { locale } = await params;
+
   if (!hasLocale(routing.locales, locale)) notFound();
 
   return (

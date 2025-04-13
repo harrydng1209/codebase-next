@@ -1,17 +1,17 @@
 // light theme
 :root {
-  --r-text-color: #{$color-black};
-  --r-background-body-color: #e0f8f9;
-  --r-background-content-color: #{$color-white};
-  --r-box-shadow-color: #2553b91a;
-  --r-scrollbar-color: #b0b0b0;
+  --n-text-color: #{$color-black};
+  --n-background-body-color: #e0f8f9;
+  --n-background-content-color: #{$color-white};
+  --n-box-shadow-color: #2553b91a;
+  --n-scrollbar-color: #b0b0b0;
 }
 
 // dark theme
 html.dark {
-  --r-text-color: #{$color-white};
-  --r-background-body-color: #16293e;
-  --r-background-content-color: #111c2d;
-  --r-box-shadow-color: #2553b91a;
-  --r-scrollbar-color: #555;
+  --n-text-color: #{$color-white};
+  --n-background-body-color: #16293e;
+  --n-background-content-color: #111c2d;
+  --n-box-shadow-color: #2553b91a;
+  --n-scrollbar-color: #555;
 }
