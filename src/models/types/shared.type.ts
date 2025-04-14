@@ -1,6 +1,7 @@
 import { SELECTORS } from '@/constants/shared.const';
+import { Dayjs } from 'dayjs';
 
-export type TDate = Date | number | string;
+export type TDate = Date | Dayjs | number | string;
 
 export type TLoadingTargets =
   | 'fullscreen'
