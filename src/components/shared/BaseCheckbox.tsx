@@ -1,4 +1,5 @@
 import { Checkbox, CheckboxProps, CheckboxRef } from 'antd';
+import { forwardRef } from 'react';
 
 interface IProps extends CheckboxProps {}
 
@@ -11,3 +12,5 @@ export const BaseCheckbox = forwardRef<CheckboxRef, IProps>((props, ref) => {
     </Checkbox>
   );
 });
+
+BaseCheckbox.displayName = 'BaseCheckbox';

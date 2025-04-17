@@ -1,3 +1,4 @@
+'use client';
 import { DEFAULT } from '@/constants/theme-colors.const';
 import { useTheme } from '@/hooks/shared/use-theme';
 import { useThemeColor } from '@/hooks/shared/use-theme-color';

@@ -1,3 +1,4 @@
+'use client';
 import IconDashboard from '@/assets/icons/shared/IconDashboard.svg';
 import IconFolderShared from '@/assets/icons/shared/IconFolderShared.svg';
 import IconLogo from '@/assets/icons/shared/IconLogo.svg';
@@ -7,10 +8,11 @@ import { CODEBASE, HOME } from '@/constants/route-pages.const';
 import { AUTH_PAGES } from '@/constants/route-pages.const';
 import { useTheme } from '@/hooks/shared/use-theme';
 import { useThemeColor } from '@/hooks/shared/use-theme-color';
+import { useRouter } from '@/i18n/navigation';
 import { Menu } from 'antd';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 export const TheSidebar: React.FC = () => {
   const t = useTranslations();

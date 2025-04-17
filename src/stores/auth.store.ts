@@ -1,11 +1,8 @@
 import { profile, refreshToken as refreshTokenApi } from '@/apis/auth.api';
-import { STORAGE_KEYS } from '@/constants/shared.const';
+import { COOKIE_KEYS } from '@/constants/shared.const';
+import { ERole } from '@/models/enums/auth.enum';
 import { IUserInfo } from '@/models/interfaces/auth.interface';
-import {
-  getLocalStorage,
-  removeLocalStorage,
-  setLocalStorage,
-} from '@/utils/storage.util';
+import jsCookie from 'js-cookie';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
@@ -20,8 +17,9 @@ interface IState {
   };
   getters: {
     getIsAuthenticated: () => boolean;
+    getToken: () => null | string;
     getUserInfo: () => IUserInfo | undefined;
-    getUserRole: () => string | undefined;
+    getUserRole: () => ERole | undefined;
   };
   isAuthenticated: boolean;
   userInfo?: IUserInfo;
@@ -29,7 +27,7 @@ interface IState {
 
 export const authStore = create<IState>()(
   devtools((set, get) => ({
-    accessToken: getLocalStorage<string>(STORAGE_KEYS.ACCESS_TOKEN),
+    accessToken: jsCookie.get(COOKIE_KEYS.ACCESS_TOKEN),
 
     actions: {
       initialize: async () => {
@@ -52,7 +50,7 @@ export const authStore = create<IState>()(
           isAuthenticated: false,
           userInfo: undefined,
         });
-        removeLocalStorage(STORAGE_KEYS.ACCESS_TOKEN);
+        jsCookie.remove(COOKIE_KEYS.ACCESS_TOKEN);
       },
 
       refreshToken: async (): Promise<boolean> => {
@@ -68,12 +66,11 @@ export const authStore = create<IState>()(
       },
 
       setToken: (token: string) => {
-        if (token === null) {
-          removeLocalStorage(STORAGE_KEYS.ACCESS_TOKEN);
-          set({ accessToken: null });
-          return;
-        }
-        setLocalStorage(STORAGE_KEYS.ACCESS_TOKEN, token);
+        jsCookie.set(COOKIE_KEYS.ACCESS_TOKEN, token, {
+          expires: 1,
+          path: '/',
+          sameSite: 'lax',
+        });
         set({ accessToken: token });
       },
 
@@ -83,6 +80,7 @@ export const authStore = create<IState>()(
 
     getters: {
       getIsAuthenticated: () => get().isAuthenticated,
+      getToken: () => get().accessToken,
       getUserInfo: () => get().userInfo,
       getUserRole: () => get().userInfo?.role,
     },

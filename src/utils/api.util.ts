@@ -2,7 +2,7 @@ import type { TLoadingTargets } from '@/models/types/shared.type';
 
 import { apiConfig } from '@/configs/api.config';
 import { AUTH_PAGES } from '@/constants/route-pages.const';
-import { ERROR_CODES, STORAGE_KEYS } from '@/constants/shared.const';
+import { COOKIE_KEYS, ERROR_CODES } from '@/constants/shared.const';
 import { EResponseStatus } from '@/models/enums/auth.enum';
 import { TFailureResponse, TSuccessResponse } from '@/models/types/auth.type';
 import { authStore } from '@/stores/auth.store';
@@ -13,9 +13,9 @@ import {
   type AxiosResponse,
   isAxiosError,
 } from 'axios';
+import jsCookie from 'js-cookie';
 
 import { showToast } from './shared.util';
-import { getLocalStorage } from './storage.util';
 
 interface IAxiosRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;
@@ -112,15 +112,16 @@ export const get = async <T = unknown, M = unknown>(
 export const handleUnauthorizedError = async (
   error: AxiosError<TFailureResponse>,
 ) => {
-  const isTokenRefreshed = await authStore.getState().actions.refreshToken();
+  const { actions } = authStore.getState();
+  const isTokenRefreshed = await actions.refreshToken();
 
   if (!isTokenRefreshed) {
-    authStore.getState().actions.logout();
+    actions.logout();
     window.location.href = AUTH_PAGES.LOGIN;
     return;
   }
 
-  const accessToken = getLocalStorage(STORAGE_KEYS.ACCESS_TOKEN);
+  const accessToken = jsCookie.get(COOKIE_KEYS.ACCESS_TOKEN);
   const originalRequest = error.config as IAxiosRequestConfig;
 
   if (originalRequest) {

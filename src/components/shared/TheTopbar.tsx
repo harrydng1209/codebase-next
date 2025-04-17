@@ -1,3 +1,4 @@
+'use client';
 import IconDarkMode from '@/assets/icons/shared/IconDarkMode.svg';
 import IconEnglish from '@/assets/icons/shared/IconEnglish.svg';
 import IconJapanese from '@/assets/icons/shared/IconJapanese.svg';

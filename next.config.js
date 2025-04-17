@@ -1,21 +1,8 @@
-import type { NextConfig } from 'next';
-import type { Configuration } from 'webpack';
-
 import createNextIntlPlugin from 'next-intl/plugin';
 import path from 'path';
 
-const nextConfig: NextConfig = {
-  experimental: {
-    turbo: {
-      rules: {
-        '*.svg': {
-          as: '*.js',
-          loaders: ['@svgr/webpack'],
-        },
-      },
-    },
-  },
-
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   reactStrictMode: true,
 
   sassOptions: {
@@ -26,7 +13,7 @@ const nextConfig: NextConfig = {
     `,
   },
 
-  webpack(config: Configuration) {
+  webpack(config) {
     if (config.module?.rules)
       config.module.rules.push({
         test: /\.svg$/,

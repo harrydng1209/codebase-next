@@ -1,3 +1,4 @@
+'use client';
 import { register } from '@/apis/auth.api';
 import IconEye from '@/assets/icons/modules/auth/IconEye.svg';
 import IconEyeClosed from '@/assets/icons/modules/auth/IconEyeClosed.svg';

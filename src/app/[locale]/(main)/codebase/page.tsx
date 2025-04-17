@@ -1,3 +1,4 @@
+'use client';
 import { healthCheck } from '@/apis/shared.api';
 import IconDashboard from '@/assets/icons/shared/IconDashboard.svg';
 import IconDelete from '@/assets/icons/shared/IconDelete.svg';
@@ -44,6 +45,7 @@ import {
 } from 'antd';
 import { DefaultOptionType } from 'antd/es/select';
 import { Dayjs } from 'dayjs';
+import { Metadata } from 'next';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
@@ -68,6 +70,10 @@ interface IForm {
   terms: boolean;
   type: string;
 }
+
+export const metadata: Metadata = {
+  title: 'Codebase',
+};
 
 const Codebase: React.FC = () => {
   const schema = yupObject({
@@ -275,25 +281,31 @@ const Codebase: React.FC = () => {
       <section>
         <h4>-- Base Buttons --</h4>
         <div className="tw-flex tw-gap-2 tw-mb-4">
-          <BaseButton color="primary" onClick={handleClickButton}>
-            Primary
+          <BaseButton onClick={handleClickButton}>Primary</BaseButton>
+          <BaseButton color="blue" onClick={handleClickButton} variant="solid">
+            Blue
           </BaseButton>
-          <BaseButton color="geekblue" onClick={handleClickButton}>
-            Geekblue
-          </BaseButton>
-          <BaseButton color="green" onClick={handleClickButton}>
+          <BaseButton color="green" onClick={handleClickButton} variant="solid">
             Green
           </BaseButton>
-          <BaseButton color="orange" onClick={handleClickButton}>
+          <BaseButton
+            color="orange"
+            onClick={handleClickButton}
+            variant="solid"
+          >
             Orange
           </BaseButton>
-          <BaseButton color="danger" onClick={handleClickButton}>
+          <BaseButton
+            color="danger"
+            onClick={handleClickButton}
+            variant="solid"
+          >
             Danger
           </BaseButton>
           <BaseButton
             color="default"
             onClick={handleClickButton}
-            variant="outlined"
+            variant="solid"
           >
             Default
           </BaseButton>
@@ -308,11 +320,11 @@ const Codebase: React.FC = () => {
             Primary
           </BaseButton>
           <BaseButton
-            color="geekblue"
+            color="blue"
             onClick={handleClickButton}
             variant="outlined"
           >
-            Geekblue
+            Blue
           </BaseButton>
           <BaseButton
             color="green"
@@ -346,22 +358,23 @@ const Codebase: React.FC = () => {
 
         <div className="tw-flex tw-gap-2 tw-mb-4">
           <BaseButton
-            color="primary"
             icon={<IconSearch fill={DEFAULT.WHITE} height="14" width="14" />}
             onClick={handleClickButton}
             shape="circle"
           />
           <BaseButton
-            color="geekblue"
+            color="blue"
             icon={<IconSettings fill={DEFAULT.WHITE} height="14" width="14" />}
             onClick={handleClickButton}
             shape="circle"
+            variant="solid"
           />
           <BaseButton
             color="green"
             icon={<IconDashboard fill={DEFAULT.WHITE} height="14" width="14" />}
             onClick={handleClickButton}
             shape="circle"
+            variant="solid"
           />
           <BaseButton
             color="orange"
@@ -370,12 +383,14 @@ const Codebase: React.FC = () => {
             }
             onClick={handleClickButton}
             shape="circle"
+            variant="solid"
           />
           <BaseButton
             color="danger"
             icon={<IconDelete fill={DEFAULT.WHITE} height="14" width="14" />}
             onClick={handleClickButton}
             shape="circle"
+            variant="solid"
           />
           <BaseButton
             color="default"

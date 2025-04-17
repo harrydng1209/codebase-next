@@ -1,13 +1,15 @@
+import { COOKIE_KEYS } from '@/constants/shared.const';
 import { EResponseStatus } from '@/models/enums/auth.enum';
-import { EToast } from '@/models/enums/shared.enum';
+import { ELanguageCode, EToast } from '@/models/enums/shared.enum';
 import { TFailureResponse } from '@/models/types/auth.type';
 import { TDate, TObjectUnknown } from '@/models/types/shared.type';
+import { authStore } from '@/stores/auth.store';
 import { notification } from 'antd';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
+import jsCookie from 'js-cookie';
 import { capitalize } from 'lodash-es';
 import { stringify } from 'qs';
-import stringTemplate from 'string-template';
 import { create, StateCreator } from 'zustand';
 
 dayjs.extend(utc);
@@ -90,13 +92,6 @@ export const formatQueryString = (
   return `${baseUrl}?${queryString}`;
 };
 
-export const formatString = (
-  template: string,
-  values: TObjectUnknown | unknown[],
-): string => {
-  return stringTemplate(template, values);
-};
-
 export const isFailureResponse = (
   response: Error | TFailureResponse,
 ): response is TFailureResponse => {
@@ -143,4 +138,22 @@ export const resetAll = <T>(stateCreator?: StateCreator<T>) => {
   storeResetFns.forEach((resetFn) => {
     resetFn();
   });
+};
+
+export const getPathnameWithoutLocale = (pathname: string) => {
+  const locales = Object.values(ELanguageCode);
+  const pathParts = pathname.split('/');
+
+  if (pathParts.length > 1 && locales.includes(pathParts[1] as ELanguageCode))
+    return '/' + pathParts.slice(2).join('/');
+
+  return pathname;
+};
+
+export const getAccessToken = (): null | string | undefined => {
+  if (typeof window !== 'undefined')
+    return jsCookie.get(COOKIE_KEYS.ACCESS_TOKEN);
+
+  const { getters } = authStore.getState();
+  return getters.getToken();
 };

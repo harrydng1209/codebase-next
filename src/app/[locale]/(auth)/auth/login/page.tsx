@@ -10,13 +10,13 @@ import { BaseInput } from '@/components/shared/BaseInput';
 import { AUTH_PAGES, HOME } from '@/constants/route-pages.const';
 import { REGEXES, SELECTORS } from '@/constants/shared.const';
 import { useHandleCatchError } from '@/hooks/shared/use-handle-catch-error';
+import { useRouter } from '@/i18n/navigation';
 import { ILoginRequest } from '@/models/interfaces/auth.interface';
 import { useAuthStore } from '@/stores/auth.store';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'antd';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { object as yupObject, string as yupString } from 'yup';
@@ -53,7 +53,7 @@ const Login: React.FC = () => {
     try {
       const response = await login(values);
       authStore.setToken(response.data.accessToken);
-      await router.push(HOME);
+      router.push(HOME);
     } catch (error) {
       handleCatchError(error);
     }
