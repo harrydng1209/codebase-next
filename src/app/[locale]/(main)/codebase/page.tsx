@@ -24,6 +24,7 @@ import { BaseTimePicker } from '@/components/shared/BaseTimePicker';
 import { NOT_FOUND } from '@/constants/route-pages.const';
 import { NODE_ENVS, REGEXES, SELECTORS } from '@/constants/shared.const';
 import { DEFAULT } from '@/constants/theme-colors.const';
+import { usePagination } from '@/hooks/shared/use-pagination';
 import { useThemeColor } from '@/hooks/shared/use-theme-color';
 import { useRouter } from '@/i18n/navigation';
 import {
@@ -116,6 +117,7 @@ const Codebase: React.FC = () => {
   const t = useTranslations();
   const loadingStore = useLoadingStore();
   const { getThemeColor } = useThemeColor();
+  const { pagination, setPagination } = usePagination();
 
   const [baseCheckbox, setBaseCheckbox] = useState<boolean>(false);
   const [baseCheckboxAll, setBaseCheckboxAll] = useState<boolean>(false);
@@ -130,12 +132,7 @@ const Codebase: React.FC = () => {
   const [baseTimePicker, setBaseTimePicker] = useState<Dayjs | null>(null);
   const [baseModal, setBaseModal] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState<string>('');
-  const [pagination, setPagination] = useState({
-    current: 1,
-    pageSize: 10,
-    total: 1000,
-  });
-  const [svgIcons, _setSvgIcons] = useState<Record<string, React.FC>>({});
+  const [svgIcons, setSvgIcons] = useState<Record<string, React.FC>>({});
 
   const handleGetHealthCheck = useDebounceCallback(async () => {
     await healthCheck();
@@ -219,7 +216,7 @@ const Codebase: React.FC = () => {
     page,
     pageSize,
   ) => {
-    setPagination({ current: page, pageSize, total: tableData.length });
+    setPagination({ currentPage: page, pageSize, total: tableData.length });
   };
 
   const onSubmit: SubmitHandler<IForm> = async (values) => {
@@ -234,20 +231,20 @@ const Codebase: React.FC = () => {
   };
 
   const loadSvgIcons = async () => {
-    // const icons: TIcons = import.meta.glob('@/assets/icons/**/*.svg', {
-    //   eager: true,
-    //   query: '',
-    // });
-    // const newIcons: Record<string, React.FC> = {};
-    // Object.entries(icons).forEach(([path, module]) => {
-    //   const iconName = path.split('/').pop()?.replace('.svg', '');
-    //   if (iconName) newIcons[iconName] = module.default;
-    // });
-    // setSvgIcons(newIcons);
+    // @ts-expect-error - require.context is not properly typed in TypeScript
+    const svgContext = require.context('@/assets/icons', true, /\.svg$/);
+    const newIcons: Record<string, React.FC> = {};
+
+    svgContext.keys().forEach((key: string) => {
+      const iconName = key.split('/').pop()?.replace('.svg', '');
+      if (iconName) newIcons[iconName] = svgContext(key).default;
+    });
+    setSvgIcons(newIcons);
   };
 
   useEffect(() => {
     loadSvgIcons();
+    setPagination((state) => ({ ...state, total: tableData.length }));
   }, []);
 
   return (
@@ -556,7 +553,7 @@ const Codebase: React.FC = () => {
 
         <BasePagination
           className="tw-mt-4 tw-flex-center"
-          current={pagination.current}
+          current={pagination.currentPage}
           onChange={handleChangePagination}
           pageSize={pagination.pageSize}
           showSizeChanger
