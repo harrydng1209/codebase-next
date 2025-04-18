@@ -10,11 +10,11 @@ import { BaseInput } from '@/components/shared/BaseInput';
 import { AUTH_PAGES } from '@/constants/route-pages.const';
 import { REGEXES, SELECTORS } from '@/constants/shared.const';
 import { useHandleCatchError } from '@/hooks/shared/use-handle-catch-error';
+import { Link } from '@/i18n/navigation';
 import { IRegister } from '@/models/interfaces/auth.interface';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'antd';
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
@@ -179,7 +179,9 @@ const Register: React.FC = () => {
 
         <div className={styles['container__login-now']}>
           <p>{t('auth.hasAccount')}</p>
-          <Link href={AUTH_PAGES.LOGIN}>{t('auth.loginNow')}</Link>
+          <Link href={AUTH_PAGES.LOGIN} prefetch>
+            {t('auth.loginNow')}
+          </Link>
         </div>
       </section>
     </div>

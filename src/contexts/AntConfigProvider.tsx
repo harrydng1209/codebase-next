@@ -2,6 +2,7 @@
 import { DEFAULT } from '@/constants/theme-colors.const';
 import { useTheme } from '@/hooks/shared/use-theme';
 import { useThemeColor } from '@/hooks/shared/use-theme-color';
+import { AntdRegistry } from '@ant-design/nextjs-registry';
 import {
   theme as antTheme,
   ConfigProvider,
@@ -51,8 +52,10 @@ export const AntConfigProvider: React.FC<IProps> = (props) => {
   };
 
   return (
-    <ConfigProvider locale={locale} theme={config}>
-      <AntApp>{children}</AntApp>
-    </ConfigProvider>
+    <AntdRegistry>
+      <ConfigProvider locale={locale} theme={config}>
+        <AntApp>{children}</AntApp>
+      </ConfigProvider>
+    </AntdRegistry>
   );
 };

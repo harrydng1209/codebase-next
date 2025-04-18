@@ -21,9 +21,11 @@ import { BaseSelect } from '@/components/shared/BaseSelect';
 import { BaseSwitch } from '@/components/shared/BaseSwitch';
 import { BaseTable } from '@/components/shared/BaseTable';
 import { BaseTimePicker } from '@/components/shared/BaseTimePicker';
-import { REGEXES, SELECTORS } from '@/constants/shared.const';
+import { NOT_FOUND } from '@/constants/route-pages.const';
+import { NODE_ENVS, REGEXES, SELECTORS } from '@/constants/shared.const';
 import { DEFAULT } from '@/constants/theme-colors.const';
 import { useThemeColor } from '@/hooks/shared/use-theme-color';
+import { useRouter } from '@/i18n/navigation';
 import {
   baseCheckboxOptions,
   baseSelectOptions,
@@ -45,7 +47,6 @@ import {
 } from 'antd';
 import { DefaultOptionType } from 'antd/es/select';
 import { Dayjs } from 'dayjs';
-import { Metadata } from 'next';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
@@ -71,11 +72,14 @@ interface IForm {
   type: string;
 }
 
-export const metadata: Metadata = {
-  title: 'Codebase',
-};
-
 const Codebase: React.FC = () => {
+  const router = useRouter();
+
+  if (process.env.NEXT_PUBLIC_NODE_ENV !== NODE_ENVS.DEVELOP) {
+    router.push(NOT_FOUND);
+    return;
+  }
+
   const schema = yupObject({
     email: yupString()
       .required('Email is required')

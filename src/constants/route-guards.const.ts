@@ -19,7 +19,15 @@ export const ROUTE_GUARDS: Record<string, IRouteGuard> = {
     roles: [],
   },
   '/codebase': {
-    requiresAuth: true,
-    roles: [ERole.Admin, ERole.Moderator, ERole.SuperAdmin, ERole.User],
+    requiresAuth: false,
+    roles: [],
+  },
+  '/forbidden': {
+    requiresAuth: false,
+    roles: [],
+  },
+  '/not-found': {
+    requiresAuth: false,
+    roles: [],
   },
 };

@@ -5,7 +5,7 @@ export const metadata: Metadata = {
 };
 
 const Home: React.FC = () => {
-  return <div>Codebase Next</div>;
+  return <div>codebase-next</div>;
 };
 
 export default Home;

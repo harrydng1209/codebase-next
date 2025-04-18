@@ -10,13 +10,12 @@ import { BaseInput } from '@/components/shared/BaseInput';
 import { AUTH_PAGES, HOME } from '@/constants/route-pages.const';
 import { REGEXES, SELECTORS } from '@/constants/shared.const';
 import { useHandleCatchError } from '@/hooks/shared/use-handle-catch-error';
-import { useRouter } from '@/i18n/navigation';
+import { Link, useRouter } from '@/i18n/navigation';
 import { ILoginRequest } from '@/models/interfaces/auth.interface';
 import { useAuthStore } from '@/stores/auth.store';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'antd';
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
 import { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { object as yupObject, string as yupString } from 'yup';
@@ -107,7 +106,9 @@ const Login: React.FC = () => {
 
         <div className={styles['container__register-now']}>
           <p>{t('auth.noAccount')}</p>
-          <Link href={AUTH_PAGES.REGISTER}>{t('auth.registerNow')}</Link>
+          <Link href={AUTH_PAGES.REGISTER} prefetch>
+            {t('auth.registerNow')}
+          </Link>
         </div>
       </section>
     </div>

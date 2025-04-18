@@ -8,10 +8,9 @@ import { CODEBASE, HOME } from '@/constants/route-pages.const';
 import { AUTH_PAGES } from '@/constants/route-pages.const';
 import { useTheme } from '@/hooks/shared/use-theme';
 import { useThemeColor } from '@/hooks/shared/use-theme-color';
-import { useRouter } from '@/i18n/navigation';
+import { Link, useRouter } from '@/i18n/navigation';
 import { Menu } from 'antd';
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 export const TheSidebar: React.FC = () => {
@@ -44,7 +43,7 @@ export const TheSidebar: React.FC = () => {
   return (
     <div className={styles['container']}>
       <div className={styles['container__logo']}>
-        <Link href={HOME}>
+        <Link href={HOME} prefetch>
           <IconLogo />
         </Link>
       </div>

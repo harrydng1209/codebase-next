@@ -15,7 +15,11 @@ export const TheBreadcrumb: React.FC = () => {
 
   if (segments.length > 0) {
     items.push({
-      title: <Link href={HOME}>{t('shared.navigator.home')}</Link>,
+      title: (
+        <Link href={HOME} prefetch>
+          {t('shared.navigator.home')}
+        </Link>
+      ),
     });
   }
 
@@ -28,7 +32,11 @@ export const TheBreadcrumb: React.FC = () => {
     }
 
     items.push({
-      title: <Link href={`/${path}`}>{t(`shared.navigator.${path}`)}</Link>,
+      title: (
+        <Link href={`/${path}`} prefetch>
+          {t(`shared.navigator.${path}`)}
+        </Link>
+      ),
     });
   });
 

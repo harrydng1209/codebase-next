@@ -6,11 +6,12 @@
 }
 
 .ant-layout {
-  background: unset;
+  background: unset !important;
 
   &-header {
-    padding: var(--ant-header-padding);
+    padding: var(--ant-header-padding) !important;
     height: var(--ant-header-height);
+    background: unset !important;
   }
 
   &-content {

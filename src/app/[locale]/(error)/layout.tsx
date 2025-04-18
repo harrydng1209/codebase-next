@@ -1,7 +1,6 @@
 import '@/assets/styles/root/main.scss';
 import { AntConfigProvider } from '@/contexts/AntConfigProvider';
 import { routing } from '@/i18n/routing';
-import { DefaultLayout } from '@/layouts/DefaultLayout';
 import { Metadata } from 'next';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import localFont from 'next/font/local';
@@ -12,7 +11,7 @@ interface IProps extends React.PropsWithChildren {
 }
 
 export const metadata: Metadata = {
-  title: 'codebase-next',
+  title: 'Error',
 };
 
 const plusJakartaSans = localFont({
@@ -32,7 +31,7 @@ const plusJakartaSans = localFont({
   variable: '--n-plus-jakarta-sans',
 });
 
-const RootLayout: React.FC<IProps> = async (props) => {
+const ErrorLayout: React.FC<IProps> = async (props) => {
   const { children, params } = props;
 
   const { locale } = await params;
@@ -46,13 +45,11 @@ const RootLayout: React.FC<IProps> = async (props) => {
       </head>
       <body>
         <NextIntlClientProvider>
-          <AntConfigProvider>
-            <DefaultLayout>{children}</DefaultLayout>
-          </AntConfigProvider>
+          <AntConfigProvider>{children}</AntConfigProvider>
         </NextIntlClientProvider>
       </body>
     </html>
   );
 };
 
-export default RootLayout;
+export default ErrorLayout;
